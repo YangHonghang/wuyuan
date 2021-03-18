@@ -1,19 +1,34 @@
-import React from "react";
+import React, { FC, ReactElement } from "react";
 import { List } from "antd";
-const TodoItem = () => {
-  const data = [
-    { id: 0, title: "第一件事" },
-    { id: 1, title: "第二件事" },
-  ];
+import Item from "./Item";
+import { ITodo } from "../typings";
+
+interface IProps {
+  todoList: ITodo[];
+  removeTodo: (id: number) => void;
+  changeVisible: () => void;
+  setModalValue: (todo: ITodo) => void;
+}
+
+const TodoItem: FC<IProps> = ({
+  todoList,
+  removeTodo,
+  changeVisible,
+  setModalValue,
+}): ReactElement => {
   return (
     <div className="todoItem">
       <List
         bordered
-        dataSource={data}
-        renderItem={(item) => (
+        dataSource={todoList}
+        renderItem={(item: ITodo) => (
           <List.Item>
-            <span></span>
-            {item.title}
+            <Item
+              todo={item}
+              changeVisible={changeVisible}
+              removeTodo={removeTodo}
+              setModalValue={setModalValue}
+            />
           </List.Item>
         )}
       />

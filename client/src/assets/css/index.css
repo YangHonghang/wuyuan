@@ -17,3 +17,8 @@
 .todoItem {
   width: 96%;
 }
+.operation {
+  width: 20%;
+  float: right;
+}
+
