@@ -3,25 +3,29 @@ import React, {
   ReactElement,
   useCallback,
   useEffect,
-  useState,
+  useReducer,
 } from "react";
+import { todoReducer } from "./reducer";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
-import { ITodo } from "./typings";
+import { ACTION_TYPE, IState, ITodo } from "./typings";
+
+const initState: IState = {
+  todoList: [],
+};
 const TodoList: FC = (): ReactElement => {
-  const [todoList, setTodoList] = useState<ITodo[]>([]);
-
+  const [state, dispath] = useReducer(todoReducer, initState);
   useEffect(() => {
-    console.log(todoList);
-  }, [todoList]);
+    console.log(state.todoList);
+  }, [state.todoList]);
 
-  const addTodo = useCallback((todo: ITodo) => {
-    setTodoList((todoList) => [...todoList, todo]);
+  const addTodo = useCallback((content: string) => {
+    dispath({ type: ACTION_TYPE.ADD_TODO, payload: content });
   }, []);
 
   return (
     <div>
-      <TodoInput addTodo={addTodo} todoList={todoList} />
+      <TodoInput addTodo={addTodo} todoList={state.todoList} />
       <TodoItem />
     </div>
   );

@@ -2,7 +2,7 @@ import React, { FC, useRef, ReactElement } from "react";
 import { Input, Button, message } from "antd";
 import { ITodo } from "../typings";
 interface IProps {
-  addTodo: (todo: ITodo) => void;
+  addTodo: (content: string) => void;
   todoList: ITodo[];
 }
 const TodoInput: FC<IProps> = ({ addTodo, todoList }): ReactElement => {
@@ -16,10 +16,7 @@ const TodoInput: FC<IProps> = ({ addTodo, todoList }): ReactElement => {
         message.error("该项已存在");
         return;
       }
-      addTodo({
-        id: new Date().getTime(),
-        content: val,
-      });
+      addTodo(val);
       inputRef.current?.setState({ value: "" });
     }
   };
