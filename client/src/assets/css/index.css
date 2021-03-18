@@ -1,0 +1,19 @@
+@import "~antd/dist/antd.css";
+
+.container {
+  margin: auto;
+  /* border: 1px solid black; */
+  width: 800px;
+}
+
+.todoInput Input {
+  width: 80%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.todoInput Button {
+  width: 15%;
+}
+.todoItem {
+  width: 96%;
+}
