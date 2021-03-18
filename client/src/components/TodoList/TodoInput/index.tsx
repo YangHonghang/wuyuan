@@ -1,10 +1,36 @@
-import React, { FC } from "react";
-import { Input, Button } from "antd";
-const TodoInput: FC = () => {
+import React, { FC, useRef, ReactElement } from "react";
+import { Input, Button, message } from "antd";
+import { ITodo } from "../typings";
+interface IProps {
+  addTodo: (todo: ITodo) => void;
+  todoList: ITodo[];
+}
+const TodoInput: FC<IProps> = ({ addTodo, todoList }): ReactElement => {
+  const inputRef = useRef<Input>(null);
+  const addItem = (): void => {
+    const val: string = inputRef.current!.state.value;
+    if (!val) return;
+    if (val.length) {
+      const isExist = todoList.find((todo) => todo.content === val);
+      if (isExist) {
+        message.error("该项已存在");
+        return;
+      }
+      addTodo({
+        id: new Date().getTime(),
+        content: val,
+      });
+      inputRef.current?.setState({ value: "" });
+    }
+  };
   return (
     <div className="todoInput">
-      <Input placeholder="add todo item" style={{ width: "80%" }} />
-      <Button type="primary" size="middle">
+      <Input
+        placeholder="add todo item"
+        ref={inputRef}
+        style={{ width: "80%" }}
+      />
+      <Button type="primary" onClick={addItem} size="middle">
         Add
       </Button>
     </div>
