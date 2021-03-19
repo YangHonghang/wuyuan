@@ -1,18 +1,14 @@
-import React, {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useReducer,
-} from "react";
+import React, { FC, ReactElement, useCallback, useReducer } from "react";
 import { todoReducer, editReducer } from "./reducer";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import TodoEdit from "./TodoEdit";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { gql, useQuery } from "@apollo/client";
-import { TODO_LIST } from "../../graphql/query";
+import {
+  fetchAddTodoItem,
+  fetchDeleteTodoItem,
+  fetchTodoItemList,
+  fetchUpdateTodoItem,
+} from "../../apis";
 import {
   TODO_ACTION_TYPE,
   ITodoState,
@@ -31,20 +27,38 @@ const initEditState: IEditState = {
 const TodoList: FC = (): ReactElement => {
   const [todoState, todoDispath] = useReducer(todoReducer, initTodoState);
   const [editState, editDispath] = useReducer(editReducer, initEditState);
-
-  useEffect(() => {
-    console.log(todoState.todoList);
-  }, [todoState.todoList]);
+  // fetchAddTodoList().then(res=>{
+  //   todoDispath();
+  // })
+  const init = () => {
+    fetchTodoItemList()
+      .then((res) =>
+        res.data.data.queryTodoItemList
+          ? res.data.data.queryTodoItemList
+          : Promise.reject("error")
+      )
+      .then((res) => {
+        todoDispath({ type: TODO_ACTION_TYPE.INIT_TODO, payload: res });
+      })
+      .catch((error) => {
+        console.log("errrr:", error);
+      });
+  };
 
   const addTodo = useCallback((content: string) => {
-    todoDispath({ type: TODO_ACTION_TYPE.ADD_TODO, payload: content });
+    fetchAddTodoItem({ content });
+    init();
   }, []);
 
   const updateTodo = useCallback((todo: ITodo) => {
-    todoDispath({ type: TODO_ACTION_TYPE.UPDATE_TODO, payload: todo });
+    // todoDispath({ type: TODO_ACTION_TYPE.UPDATE_TODO, payload: todo });
+    fetchUpdateTodoItem(todo);
+    init();
   }, []);
   const removeTodo = useCallback((id: number) => {
-    todoDispath({ type: TODO_ACTION_TYPE.REMOVE_TODO, payload: id });
+    // todoDispath({ type: TODO_ACTION_TYPE.REMOVE_TODO, payload: id });
+    fetchDeleteTodoItem({ id });
+    init();
   }, []);
 
   const changeVisible = useCallback(() => {

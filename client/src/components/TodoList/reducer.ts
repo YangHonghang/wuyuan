@@ -11,13 +11,15 @@ import {
 function todoReducer(state: ITodoState, action: ITodoAction): ITodoState {
   const { type, payload } = action;
   switch (type) {
+    case TODO_ACTION_TYPE.INIT_TODO:
+      return {
+        ...state,
+        todoList: payload as ITodo[],
+      };
     case TODO_ACTION_TYPE.ADD_TODO:
       return {
         ...state,
-        todoList: [
-          ...state.todoList,
-          { id: new Date().getTime(), content: payload as string },
-        ],
+        todoList: [...state.todoList, payload as ITodo],
       };
     case TODO_ACTION_TYPE.REMOVE_TODO:
       return {
