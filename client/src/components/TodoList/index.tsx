@@ -1,8 +1,15 @@
-import React, { FC, ReactElement, useCallback, useReducer } from "react";
+import React, {
+  FC,
+  ReactElement,
+  useCallback,
+  useReducer,
+  useEffect,
+} from "react";
 import { todoReducer, editReducer } from "./reducer";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import TodoEdit from "./TodoEdit";
+import { message } from "antd";
 import {
   fetchAddTodoItem,
   fetchDeleteTodoItem,
@@ -27,9 +34,7 @@ const initEditState: IEditState = {
 const TodoList: FC = (): ReactElement => {
   const [todoState, todoDispath] = useReducer(todoReducer, initTodoState);
   const [editState, editDispath] = useReducer(editReducer, initEditState);
-  // fetchAddTodoList().then(res=>{
-  //   todoDispath();
-  // })
+
   const init = () => {
     fetchTodoItemList()
       .then((res) =>
@@ -38,26 +43,30 @@ const TodoList: FC = (): ReactElement => {
           : Promise.reject("error")
       )
       .then((res) => {
-        todoDispath({ type: TODO_ACTION_TYPE.INIT_TODO, payload: res });
+        todoDispath({ type: TODO_ACTION_TYPE.INIT_TODO_LIST, payload: res });
       })
       .catch((error) => {
-        console.log("errrr:", error);
+        message.error(JSON.stringify(error));
       });
   };
-
+  useEffect(init, []);
   const addTodo = useCallback((content: string) => {
-    fetchAddTodoItem({ content });
+    fetchAddTodoItem({ content }).catch((error) =>
+      message.error(JSON.stringify(error))
+    );
     init();
   }, []);
 
   const updateTodo = useCallback((todo: ITodo) => {
-    // todoDispath({ type: TODO_ACTION_TYPE.UPDATE_TODO, payload: todo });
-    fetchUpdateTodoItem(todo);
+    fetchUpdateTodoItem(todo).catch((error) =>
+      message.error(JSON.stringify(error))
+    );
     init();
   }, []);
   const removeTodo = useCallback((id: number) => {
-    // todoDispath({ type: TODO_ACTION_TYPE.REMOVE_TODO, payload: id });
-    fetchDeleteTodoItem({ id });
+    fetchDeleteTodoItem({ id }).catch((error) =>
+      message.error(JSON.stringify(error))
+    );
     init();
   }, []);
 
@@ -81,6 +90,7 @@ const TodoList: FC = (): ReactElement => {
         changeVisible={changeVisible}
         isVisible={editState.isVisivle}
         todo={editState.todo}
+        setModalValue={setModalValue}
       />
     </div>
   );

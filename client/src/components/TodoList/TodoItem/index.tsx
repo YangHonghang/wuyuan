@@ -20,6 +20,9 @@ const TodoItem: FC<IProps> = ({
     <div className="todoItem">
       <List
         bordered
+        rowKey={(item: ITodo) => {
+          return String(item.id);
+        }}
         dataSource={todoList}
         renderItem={(item: ITodo) => (
           <List.Item>

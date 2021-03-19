@@ -30,11 +30,11 @@ export const deleteItem = function(item: ItemDelete): TodoItem {
   return preDelete;
 };
 
-export const updateItem = function(item: ItemUpdate): TodoItem {
+export const updateItem = function(newItem: ItemUpdate): TodoItem {
   const preUpdate = db.find((item) => {
-    return item.id === item.id;
+    return item.id === newItem.id;
   });
-  if (preUpdate) preUpdate.content = item.content;
+  if (preUpdate) preUpdate.content = newItem.content;
   return preUpdate ?? new TodoItem();
 };
 
