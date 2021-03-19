@@ -3,7 +3,7 @@ import {
   ITEM_INPUT_TYPE,
   ITEM_DELETE_TYPE,
   ITEM_UPDATE_TYPE,
-} from "../components/TodoList/typings";
+} from "../components/TodoList/types";
 const axios = Axios.create();
 axios.defaults.baseURL = "http://localhost:4000/graphql";
 export default axios;

@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { List } from "antd";
 import Item from "./Item";
-import { ITodo } from "../typings";
+import { ITodo } from "../types"; 
 
 interface IProps {
   todoList: ITodo[];

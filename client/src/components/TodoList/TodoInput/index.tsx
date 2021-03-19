@@ -1,6 +1,6 @@
 import React, { FC, useRef, ReactElement } from "react";
 import { Input, Button, message } from "antd";
-import { ITodo } from "../typings";
+import { ITodo } from "../types";
 interface IProps {
   addTodo: (content: string) => void;
   todoList: ITodo[];

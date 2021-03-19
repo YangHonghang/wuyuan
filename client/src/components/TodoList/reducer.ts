@@ -6,7 +6,7 @@ import {
   EDIT_ACTION_TYPE,
   IEditState,
   IEditAction,
-} from "./typings";
+} from "./types";
 
 function todoReducer(state: ITodoState, action: ITodoAction): ITodoState {
   const { type, payload } = action;

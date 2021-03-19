@@ -1,6 +1,6 @@
 import { Input, Modal } from "antd";
 import React, { FC, ReactElement } from "react";
-import { ITodo } from "../typings";
+import { ITodo } from "../types";
 interface IProps {
   isVisible: boolean;
   changeVisible: () => void;

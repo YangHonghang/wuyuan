@@ -22,7 +22,7 @@ import {
   ITodo,
   IEditState,
   EDIT_ACTION_TYPE,
-} from "./typings";
+} from "./types";
 const initTodoState: ITodoState = {
   todoList: [],
 };

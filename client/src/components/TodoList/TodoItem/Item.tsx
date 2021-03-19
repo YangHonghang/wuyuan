@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import React, { FC, ReactElement } from "react";
-import { ITodo } from "../typings";
+import { ITodo } from "../types";
 interface IProps {
   todo: ITodo;
   removeTodo: (id: number) => void;
