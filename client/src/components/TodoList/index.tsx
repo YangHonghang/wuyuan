@@ -9,6 +9,10 @@ import { todoReducer, editReducer } from "./reducer";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import TodoEdit from "./TodoEdit";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { gql, useQuery } from "@apollo/client";
+import { TODO_LIST } from "../../graphql/query";
 import {
   TODO_ACTION_TYPE,
   ITodoState,
@@ -16,10 +20,10 @@ import {
   IEditState,
   EDIT_ACTION_TYPE,
 } from "./typings";
-
 const initTodoState: ITodoState = {
   todoList: [],
 };
+
 const initEditState: IEditState = {
   isVisivle: false,
   todo: { id: NaN, content: "" },

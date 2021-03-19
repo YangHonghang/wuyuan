@@ -1,5 +1,5 @@
 import { Input, Modal } from "antd";
-import React, { FC, ReactElement, useRef } from "react";
+import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { ITodo } from "../typings";
 interface IProps {
   isVisible: boolean;
@@ -27,6 +27,7 @@ const TodoEdit: FC<IProps> = ({
     changeVisible();
     inputRef.current?.setState({ value: "" });
   };
+
   return (
     <div>
       <Modal
@@ -35,9 +36,9 @@ const TodoEdit: FC<IProps> = ({
         onOk={updateItem}
         onCancel={closeModal}
       >
+        {JSON.stringify(todo)}
         <Input
           placeholder="edit todo item"
-          defaultValue={todo.content}
           ref={inputRef}
         />
       </Modal>
