@@ -31,7 +31,7 @@ TodoList服务器端
 #安装依赖
 yarn install
 #启动
-yarn server
+yarn start
 ```
 
 ## Test:
@@ -48,4 +48,4 @@ yarn install
 yarn test
 ```
 
-由于我自己的服务器刚刚过期，所以部署没法接着做，这些技术很多都是现学的，希望有机会详谈。
+由于我自己的服务器刚刚过期，所以部署没法接着做.
